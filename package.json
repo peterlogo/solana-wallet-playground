@@ -1,0 +1,64 @@
+{
+  "name": "solana-wallet-playground",
+  "version": "1.0.0",
+  "description": "A simple demo implementation of a solana HD wallet.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "format": "prettier --config .prettierrc \"./src/**/*.ts\" --write",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "generate:docs": "typedoc",
+    "dev": "cross-env NODE_ENV=development && nodemon",
+    "build": "tsc",
+    "build:dev": "npm run postbuild && rm -rf dist && tsc",
+    "postbuild": "npm run format && npm run lint && npm run test",
+    "test": "mocha --exit -r ts-node/register 'tests/**/*.ts' --timeout 10000",
+    "test:coverage": "nyc mocha --exit -r ts-node/register 'tests/**/*.ts'",
+    "test:watch": "nodemon --exec npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterlogo/solana-wallet-playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peterlogo/solana-wallet-playground/issues"
+  },
+  "homepage": "https://github.com/peterlogo/solana-wallet-playground#readme",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@solana/web3.js": "^1.32.0",
+    "axios": "^0.25.0",
+    "dotenv": "^15.0.0",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-bunyan-logger": "^2.1.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^10.1.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.5",
+    "@types/koa-bunyan-logger": "^2.1.4",
+    "@types/koa-logger": "^3.1.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa__cors": "^3.1.1",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^17.0.14",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "concurrently": "^7.0.0",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.11",
+    "typescript": "^4.5.5"
+  }
+}
