@@ -1,6 +1,10 @@
 import { Flex, HStack, Text } from '@chakra-ui/react';
 
-export function BalanceIndicator() {
+interface BalanceProps {
+  amount: string;
+}
+
+export function BalanceIndicator(props: BalanceProps) {
   return (
     <>
       <Flex bg={'primary'} rounded={'lg'} h={12}>
@@ -19,7 +23,7 @@ export function BalanceIndicator() {
             fontWeight={'medium'}
             color={'white'}
           >
-            30 SOL
+            {props.amount} SOL
           </Text>
         </HStack>
       </Flex>

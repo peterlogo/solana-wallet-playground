@@ -62,9 +62,11 @@ export async function refreshBalance(ctx: Context): Promise<void> {
     const solBalance = await connection.getBalance(publicKey);
     const newBalance = convertLamportToSol(solBalance);
     const address = await Account.findOne({ address: publicKey });
+    console.log({ address, solBalance });
     if (parseInt(address.balance) === solBalance) {
       ctx.status = 200;
       ctx.body = {
+        data: {},
         message: 'Address up to date'
       };
       return;
