@@ -42,7 +42,7 @@ export function WalletItem({
               background: 'blue.500',
               borderColor: 'blue.500'
             }}
-            onClick={() => onClickRefresh()}
+            onClick={onClickRefresh}
           />
         </Flex>
       </Flex>

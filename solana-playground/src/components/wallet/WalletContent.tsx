@@ -14,6 +14,7 @@ import {
 } from '../../services/axios';
 import { BalanceIndicator } from './BalanceIndicator';
 import { ConnectionIndicator } from './ConnectionIndicator';
+import { EmptyWallet } from './EmptyWallet';
 import { WalletItem } from './WalletItem';
 
 interface WalletData {
@@ -30,15 +31,8 @@ export function WalletContent() {
     data.forEach((wallet) => {
       balance = parseFloat(wallet.balance) + balance;
     });
-    balance = balance / 1000000000;
     setTotal(balance);
   }, [data]);
-
-  const convertToSOL = (value: string): string => {
-    const lamport = parseFloat(value);
-    const sol = lamport / 1000000000;
-    return sol.toString();
-  };
 
   const handleCreateAddress = async (): Promise<void> => {
     try {
@@ -56,10 +50,6 @@ export function WalletContent() {
     try {
       await refreshBalance(address).then((res) => {
         if (res.data.balance === undefined) return;
-        getAddresses().then((res) => {
-          setData(res);
-          setTotalBalance();
-        });
       });
     } catch (error) {
       throw error;
@@ -100,16 +90,18 @@ export function WalletContent() {
           </GridItem>
         </Grid>
         <Box bg={'primary'} mt={8} p={3} rounded={'lg'}>
-          {data.length === 0
-            ? null
-            : data.map((wallet, index) => (
-                <WalletItem
-                  key={index}
-                  address={wallet.address}
-                  balance={wallet.balance}
-                  onClickRefresh={() => handleRefreshBalance(wallet.address)}
-                />
-              ))}
+          {data.length === 0 ? (
+            <EmptyWallet />
+          ) : (
+            data.map((wallet, index) => (
+              <WalletItem
+                key={index}
+                address={wallet.address}
+                balance={wallet.balance}
+                onClickRefresh={() => handleRefreshBalance(wallet.address)}
+              />
+            ))
+          )}
         </Box>
       </Container>
     </>
