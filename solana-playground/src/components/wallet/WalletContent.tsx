@@ -6,6 +6,7 @@ import {
   GridItem,
   HStack
 } from '@chakra-ui/react';
+import { isEmpty } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import {
   createAddress,
@@ -40,6 +41,7 @@ export function WalletContent() {
         const newAddress = res;
         const newData = [...data, newAddress];
         setData(newData);
+        setTotalBalance();
       });
     } catch (error) {
       throw error;
@@ -48,9 +50,10 @@ export function WalletContent() {
 
   const handleRefreshBalance = async (address: string): Promise<void> => {
     try {
-      await refreshBalance(address).then((res) => {
-        if (res.data.balance === undefined) return;
-      });
+      const account = await refreshBalance(address);
+      if (isEmpty(account)) return;
+      const response = await getAddresses();
+      setData(response);
     } catch (error) {
       throw error;
     }
@@ -59,9 +62,12 @@ export function WalletContent() {
   useEffect(() => {
     getAddresses().then((res) => {
       setData(res);
-      setTotalBalance();
     });
-  }, [setTotalBalance, data]);
+  }, []);
+
+  useEffect(() => {
+    setTotalBalance();
+  }, [setTotalBalance]);
 
   return (
     <>
